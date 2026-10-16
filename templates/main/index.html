@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}DevSpace | 홈{% endblock %}
+
+{% block content %}
+<!-- 히어로 섹션 -->
+<div class="row align-items-center mb-5 py-4">
+    <div class="col-lg-7 mb-4 mb-lg-0">
+        <span class="badge mb-3 px-3 py-2 fs-6">⚡ NEXT-GEN BACKEND SPACE</span>
+        <h1 class="display-4 fw-extrabold mb-4" style="font-family: var(--font-display);">
+            코드를 기록하고,<br>함께 <span style="background: var(--lemon); padding: 0 6px;">해결하는</span> 공간.
+        </h1>
+        <p class="lead fw-semibold mb-4" style="color: var(--ink-soft) !important;">
+            파이썬과 장고로 백엔드를 탐구하며 마주친 고민과 노하우를 기록하고 공유하는 개발자 커뮤니티입니다.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="{% url 'board:post_list' %}" class="btn btn-primary btn-lg px-4 py-3">
+                게시판 둘러보기 &rarr;
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'board:post_create' %}" class="btn btn-outline-secondary btn-lg px-4 py-3">
+                    새 글 작성하기 ✍️
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary btn-lg px-4 py-3">
+                    로그인하기
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 가상 터미널 / IDE 모형 박스 -->
+    <div class="col-lg-5">
+        <div class="card shadow-lg overflow-hidden">
+            <div class="card-header d-flex align-items-center justify-content-between py-2 px-3" style="background: var(--ink) !important; color: #fff; border-bottom: var(--line);">
+                <div class="d-flex gap-2">
+                    <span class="rounded-circle bg-danger d-inline-block" style="width: 12px; height: 12px; border: 1.5px solid var(--paper);"></span>
+                    <span class="rounded-circle bg-warning d-inline-block" style="width: 12px; height: 12px; border: 1.5px solid var(--paper);"></span>
+                    <span class="rounded-circle bg-success d-inline-block" style="width: 12px; height: 12px; border: 1.5px solid var(--paper);"></span>
+                </div>
+                <small class="font-monospace text-muted" style="color: #94a3b8 !important;">bash — devspace@local</small>
+            </div>
+            <div class="card-body p-4 font-monospace small" style="background: #0f111a; color: #38bdf8; line-height: 1.6;">
+                <p class="mb-1 text-muted"># DevSpace 서버 실행 중...</p>
+                <p class="mb-1 text-white">$ python manage.py runserver</p>
+                <p class="mb-1 text-success">Watching for file changes with StatReloader</p>
+                <p class="mb-1 text-success">Django version 6.1.2, using settings 'config.settings'</p>
+                <p class="mb-1 text-warning">Starting development server at http://127.0.0.1:8000/</p>
+                <p class="mb-0 text-white">Quit the server with CONTROL-C. <span style="background: var(--cobalt); width: 8px; height: 15px; display: inline-block; vertical-align: middle; animation: blink 1s infinite;"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 빠른 카테고리 이동 카드 섹션 -->
+<div class="row g-4 mt-4">
+    <div class="col-md-6 col-lg-3">
+        <a href="{% url 'board:post_list' %}?category=notice" class="card text-decoration-none h-100 p-4 d-block card-hover">
+            <div class="fs-2 mb-3">📢</div>
+            <h3 class="h4 fw-bold mb-2">공지사항</h3>
+            <p class="text-secondary mb-0" style="color: var(--ink-soft) !important;">
+                DevSpace 플랫폼의 주요 업데이트 소식과 운영 정책을 확인하세요.
+            </p>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a href="{% url 'board:post_list' %}?category=info" class="card text-decoration-none h-100 p-4 d-block card-hover">
+            <div class="fs-2 mb-3">📖</div>
+            <h3 class="h4 fw-bold mb-2">정보 공유</h3>
+            <p class="text-secondary mb-0" style="color: var(--ink-soft) !important;">
+                개발과 관련해서 여러분들의 지식과 팁을 공유해주세요.
+            </p>
+        </a>
+    </div>    <div class="col-md-6 col-lg-3">
+        <a href="{% url 'board:post_list' %}?category=free" class="card text-decoration-none h-100 p-4 d-block card-hover">
+            <div class="fs-2 mb-3">💬</div>
+            <h3 class="h4 fw-bold mb-2">자유게시판</h3>
+            <p class="text-secondary mb-0" style="color: var(--ink-soft) !important;">
+                개발 이야기부터 일상 소소한 잡담까지 자유롭게 나누는 공간입니다.
+            </p>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a href="{% url 'board:post_list' %}?category=qna" class="card text-decoration-none h-100 p-4 d-block card-hover">
+            <div class="fs-2 mb-3">❓</div>
+            <h3 class="h4 fw-bold mb-2">Q&amp;A</h3>
+            <p class="text-secondary mb-0" style="color: var(--ink-soft) !important;">
+                코딩 중 막히는 에러나 궁금한 점을 질문하고 함께 해결해 보세요.
+            </p>            
+        </a>
+    </div>
+</div>
+{% endblock %}
