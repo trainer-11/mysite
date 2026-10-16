@@ -20,3 +20,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+# board/models.py 에 추가
+from django.contrib.auth.models import User
+
+class Comment(models.Model):
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(verbose_name='댓글 내용')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='작성일시')
+
+    def __str__(self):
+        return self.content

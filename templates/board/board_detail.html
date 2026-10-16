@@ -28,5 +28,46 @@
     {% endif %}
 
     <a href="{% url 'board:list' %}">목록으로</a>
+
+    <!-- ========================================== -->
+    <!-- 👇 [추가] 댓글 영역 시작 -->
+    <!-- ========================================== -->
+    <hr class="my-4">
+
+    <div class="comments-section mt-4">
+        <h4 class="fw-bold mb-3">💬 댓글 ({{ post.comments.count }})</h4>
+        
+        <!-- 댓글 목록 출력 -->
+        {% for comment in post.comments.all %}
+            <div class="border-bottom py-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">{{ comment.author.username }}</span>
+                    <span class="text-muted small">{{ comment.created_at|date:"Y-m-d H:i" }}</span>
+                </div>
+                <p class="mt-1 mb-0" style="white-space: pre-line;">{{ comment.content }}</p>
+            </div>
+        {% empty %}
+            <p class="text-muted">아직 작성된 댓글이 없습니다. 첫 댓글을 남겨보세요!</p>
+        {% endfor %}
+
+        <!-- 댓글 작성 폼 -->
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'board:comment_create' post.pk %}" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ comment_form.as_p }}
+                </div>
+                <button type="submit" class="button">댓글 등록</button>
+            </form>
+        {% else %}
+            <div class="mt-4 text-center text-muted">
+                댓글을 작성하시려면 <a href="{% url 'accounts:login' %}">로그인</a>이 필요합니다.
+            </div>
+        {% endif %}
+    </div>
+    <!-- ========================================== -->
+    <!-- 댓글 영역 끝 -->
+    <!-- ========================================== -->
+
 </div>
 {% endblock %}

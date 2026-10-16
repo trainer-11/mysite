@@ -24,4 +24,7 @@ urlpatterns = [
     # 삭제 관련 모든 별칭 허용
     path('<int:pk>/delete/', views.post_delete, name='delete'),
     path('<int:pk>/delete/', views.post_delete, name='post_delete'),
+
+    # board/urls.py 의 urlpatterns에 추가
+    path('post/<int:post_pk>/comment/create/', views.comment_create, name='comment_create'),
 ]

@@ -8,10 +8,22 @@
         <div class="card shadow p-4">
             <h2 class="fw-bold mb-4">✏️ 글쓰기</h2>
             
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                <!-- 👇 이 부분이 빠져있으면 입력창이 나타나지 않습니다! -->
+                <!-- 👇 [추가] 카테고리를 선택할 수 있는 드롭다운 메뉴 -->
+                <div class="mb-3">
+                    <label for="category" class="form-label fw-bold">게시판(카테고리)</label>
+                    <select name="category" id="category" class="form-select">
+                        <option value="">카테고리 선택</option>
+                        {% for category in categories %}
+                            <option value="{{ category.pk }}" {% if post.category == category %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="mb-3">
                     {{ form.as_p }}
                 </div>
